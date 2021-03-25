@@ -1,0 +1,37 @@
+[
+  {
+    "ProductId": 1,
+    "ProductCode": "HOCK21",
+    "ProductName": "Hockey PPV 2021",
+    "Price": "7.54",
+    "ReleaseDate": "2020-06-14 06:41:13"
+  },
+  {
+    "ProductId": 2,
+    "ProductCode": "SOCK01",
+    "ProductName": "Soccer Hooligan Fights 1.0",
+    "Price": "9.68",
+    "ReleaseDate": "2020-10-20 02:58:26"
+  },
+  {
+    "ProductId": 3,
+    "ProductCode": "ROCK02",
+    "ProductName": "Rock Throwing Championship 2.0",
+    "Price": "7.07",
+    "ReleaseDate": "2020-08-08 19:58:08"
+  },
+  {
+    "ProductId": 4,
+    "ProductCode": "ZUCKHUNT",
+    "ProductName": "Hunting Finals - Zuckerberg edition",
+    "Price": "3.87",
+    "ReleaseDate": "2020-04-29 18:06:30"
+  },
+  {
+    "ProductId": 5,
+    "ProductCode": "COUCH20",
+    "ProductName": "Couch Potato Faceoff PPV Event",
+    "Price": "8.38",
+    "ReleaseDate": "2021-01-30 17:57:14"
+  }
+]

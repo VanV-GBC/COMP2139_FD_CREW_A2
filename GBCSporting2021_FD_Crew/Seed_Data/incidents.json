@@ -1,0 +1,33 @@
+[
+  {
+    "IncidentId": 1,
+    "CustomerId": 2,
+    "ProductId": 3,
+    "TechnicianId": 4,
+    "Title": "I'm tryin' Captain, can't reach the button",
+    "Description": "This is a seeded description placeholder",
+    "DateOpened": "2020-06-10 03:41:13",
+    "DateClosed": "2020-06-14 06:41:13"
+  },
+  {
+    "IncidentId": 2,
+    "CustomerId": 1,
+    "ProductId": 5,
+    "TechnicianId": 4,
+    "Title": "Tester's Delight Error",
+    "Description": "This is a seeded description placeholder",
+    "DateOpened": "2020-06-10 03:41:13",
+    "DateClosed": "2020-06-14 12:41:13"
+  },
+  {
+    "IncidentId": 3,
+    "CustomerId": 9,
+    "ProductId": 4,
+    "TechnicianId": 6,
+    "Title": "To be or not to be",
+    "Description": "This is a seeded description placeholder",
+    "DateOpened": "2020-06-10 03:21:13",
+    "DateClosed": "2020-06-14 17:41:13"
+  }
+
+]

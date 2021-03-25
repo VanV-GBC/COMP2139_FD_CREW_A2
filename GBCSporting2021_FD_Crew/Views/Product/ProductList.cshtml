@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Product Manager";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-sm-10">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Yearly Price</th>
+                    <th>Release Date</th>
+                    <th></th>
+                    <th></th>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td>@product.ProductCode</td>
+                        <td>@product.ProductName</td>
+                        <td>@product.Price</td>
+                        <td>@product.ReleaseDate</td>
+                        <td>
+                            <a asp-action="Edit" class="btn btn-primary"
+                               asp-route-id="@product.ProductId">Edit</a>
+                        </td>
+                        <td>
+                            <a asp-action="Delete" class="btn btn-primary"
+                               asp-route-id="@product.ProductId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-action="Add" class="btn btn-primary">Add Product</a>
+    </div>
+</div>
