@@ -89,8 +89,8 @@ namespace GBCSporting2021_FD_Crew.Migrations
                     TechnicianId = table.Column<int>(type: "int", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    dateOpened = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    dateClosed = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    dateOpened = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    dateClosed = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {

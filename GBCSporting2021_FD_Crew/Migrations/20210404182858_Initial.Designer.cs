@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GBCSporting2021_FD_Crew.Migrations
 {
     [DbContext(typeof(SportsProContext))]
-    [Migration("20210227013452_Initial")]
+    [Migration("20210404182858_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1801,10 +1801,10 @@ namespace GBCSporting2021_FD_Crew.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("dateClosed")
+                    b.Property<DateTime?>("dateClosed")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("dateOpened")
+                    b.Property<DateTime>("dateOpened")
                         .HasColumnType("datetime2");
 
                     b.HasKey("IncidentId");
