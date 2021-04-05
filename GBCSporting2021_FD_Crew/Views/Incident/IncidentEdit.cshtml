@@ -1,9 +1,9 @@
-﻿@model Incident
+﻿@model IncedentEditModel
 @{
 
     ViewData["Title"] = ViewBag.Title;
 
-    string title = ViewBag.Action + " Incident";
+    string title = Model.Action + " Incident";
     ViewBag.Title = title;
 }
 
@@ -15,63 +15,68 @@
 
 <h1>@ViewBag.Title</h1>
 
-<form asp-action="@ViewBag.Action" method="post">
+<form asp-action="@Model.Action" method="post" asp-controller="Incident">
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="form-group">
-        <label asp-for="CustomerId">Customer</label>
-        <select asp-for="CustomerId"
-                asp-items="@(new SelectList(ViewBag.CustomerList,
-                             "Value", "Text",
-                             Model.CustomerId))"
-                class="form-control"></select>
+        <label asp-for="Incident.CustomerId">Customer</label>
+        <select class="form-control" asp-for="Incident.CustomerId">
+            <option value="-1">Select Customer</option>
+            @foreach (Customer customer in Model.Customers)
+            {
+                <option value="@customer.CustomerId">@(customer.FirstName+" "+customer.LastName)</option>
+            }
+        </select>
     </div>
 
     <div class="form-group">
-        <label asp-for="ProductId">Product</label>
-        <select asp-for="ProductId"
-                asp-items="@(new SelectList(ViewBag.Products,
-                             "ProductId", "ProductName",
-                             Model.ProductId))"
-                class="form-control"></select>
-
+        <label asp-for="Incident.ProductId">Product</label>
+        <select class="form-control" asp-for="Incident.ProductId">
+            <option value="-1">Select Product</option>
+            @foreach (Product product in Model.Products)
+            {
+                <option value="@product.ProductId">@product.ProductName</option>
+            }
+        </select>
     </div>
 
     <div class="form-group">
-        <label asp-for="Title">Title</label>
-        <input asp-for="Title" class="form-control">
+        <label asp-for="Incident.Title">Title</label>
+        <input asp-for="Incident.Title" class="form-control">
     </div>
 
     <div class="form-group">
-        <label asp-for="Description">Description</label>
-        <textarea asp-for="Description" class="form-control"></textarea>
+        <label asp-for="Incident.Description">Description</label>
+        <textarea asp-for="Incident.Description" class="form-control"></textarea>
     </div>
 
     <div class="form-group">
-        <label asp-for="TechnicianId">Technician</label>
-        <select asp-for="TechnicianId"
-                asp-items="@(new SelectList(ViewBag.Technicians,
-                             "TechnicianId", "Name",
-                             Model.TechnicianId))"
-                class="form-control"></select>
+        <label asp-for="Incident.TechnicianId">Technician</label>
+        <select class="form-control" asp-for="Incident.TechnicianId">
+            <option value="">Select Technician</option>
+            @foreach (Technician technician in Model.Technicians)
+            {
+                <option value="@technician.TechnicianId">@technician.Name</option>
+            }
+        </select>
     </div>
 
     <div class="form-group">
-        <label asp-for="dateOpened">Date Opened</label>
-        <input asp-for="dateOpened" value="@(DateTime.Now)" class="form-control">
+        <label asp-for="Incident.dateOpened">Date Opened</label>
+        <input asp-for="Incident.dateOpened" value="@(DateTime.Now)" class="form-control">
     </div>
 
     <div class="form-group">
-        <label asp-for="dateClosed">Date Closed</label>
+        <label asp-for="Incident.dateClosed">Date Closed</label>
 
-        <input asp-for="dateClosed" value="@(DateTime.Now)" class="form-control">
+        <input asp-for="Incident.dateClosed" value="" class="form-control">
 
     </div>
 
 
-    <input type="hidden" asp-for="IncidentId" />
+    <input type="hidden" asp-for="Incident.IncidentId" />
 
-    <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
+    <button type="submit" class="btn btn-primary">@Model.Action</button>
     <a asp-action="List" class="btn btn-primary">Cancel</a>
 
 </form>

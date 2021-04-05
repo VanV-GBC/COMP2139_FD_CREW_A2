@@ -28,9 +28,9 @@ namespace GBCSporting2021_FD_Crew.Models
         [Required(ErrorMessage = "Please input an incident description")]
         public String Description { get; set; }
 
-        public DateTime? dateOpened { get; set; }
+        [Required(ErrorMessage = "Please select incident open date")]
+        public DateTime dateOpened { get; set; }
 
-        [Required(ErrorMessage = "Please select incident close date")]
-        public DateTime dateClosed { get; set; }
+        public DateTime? dateClosed { get; set; }
     }
 }

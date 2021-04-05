@@ -1799,10 +1799,10 @@ namespace GBCSporting2021_FD_Crew.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("dateClosed")
+                    b.Property<DateTime?>("dateClosed")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("dateOpened")
+                    b.Property<DateTime>("dateOpened")
                         .HasColumnType("datetime2");
 
                     b.HasKey("IncidentId");
