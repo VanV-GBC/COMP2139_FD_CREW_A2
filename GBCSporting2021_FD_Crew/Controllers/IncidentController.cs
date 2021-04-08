@@ -149,6 +149,13 @@ namespace COMP2139_FD_CREW.Controllers
             }
         }
 
+        //----------------------Select Tech
+        [HttpGet]
+        public IActionResult SelectTech()
+        {
+            List<Technician> technicians = context.Technicians.ToList();
+            return View("SelectTech", technicians);
+        }
 
         //----------------------Delete Incident
 
