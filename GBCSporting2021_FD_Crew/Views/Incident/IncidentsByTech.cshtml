@@ -1,0 +1,42 @@
+@model List<Incident>
+    @{
+    ViewData["Title"] = "Incidents by Technician";
+    }
+
+    <h1>@ViewData["Title"]</h1>
+
+    @if (!Model.Any())
+    {
+    <h2>No open incidents for this technician!</h2>
+    }
+    else
+    {
+    <h2>Technician: </h2>
+    <h2>Assigned/Open Incidents</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Date Opened</th>
+                <th></th>
+        </thead>
+        <tbody>
+            @foreach (Incident incident in Model.Incidents)
+                {
+
+            <tr>
+                <td>@incident.Title </td>
+                <td>@incident.Customer.FirstName @incident.Customer.LastName</td>
+                <td>@incident.Product.ProductName</td>
+                <td>@incident.dateOpened</td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-primary"
+                       asp-route-id="@incident.IncidentId">Edit</a>
+                </td>
+            </tr>
+                }
+        </tbody>
+    </table>
+    }

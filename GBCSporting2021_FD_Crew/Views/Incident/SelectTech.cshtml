@@ -5,15 +5,16 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form asp-action="List" method="post" asp-controller="">
+<form asp-action="List" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
+    <div class="form-group">a
         <label asp-for="Incident.TechnicianId">Technician</label>
         <select class="form-control" asp-for="Incident.TechnicianId">
-            @foreach (Technician technician in Model.Technicians)
+            @foreach (Technician technician in Model.Tecahnicians)
             {
-                <option value="@technician.TechnicianId">@technician.Name</option>
+            <option value="@technician.TechnicianId">@technician.Name</option>
             }
         </select>
+        <button class="btn btn-primary" type="submit" name="submit">Select</button>
     </div>
 </form>
