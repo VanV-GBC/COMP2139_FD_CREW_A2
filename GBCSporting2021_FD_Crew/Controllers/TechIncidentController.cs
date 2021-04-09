@@ -49,7 +49,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
             List<Customer> customers = context.Customers.ToList();
             List<Product> products = context.Products.ToList();
             List<Technician> technicians = context.Technicians.ToList();
-            IncedentEditModel data = new IncedentEditModel
+            IncidentEditModel data = new IncidentEditModel
             {
                 Customers = customers,
                 Products = products,
@@ -64,7 +64,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
         // POST - edit incident
 
         [HttpPost]
-        public IActionResult Edit(IncedentEditModel data)
+        public IActionResult Edit(IncidentEditModel data)
         {
 
             if (ModelState.IsValid)
