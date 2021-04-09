@@ -1,4 +1,4 @@
-@model List<Incident>
+@model IEnumerable<Incident>
     @{
     ViewData["Title"] = "Incidents by Technician";
     }
@@ -23,7 +23,7 @@
                 <th></th>
         </thead>
         <tbody>
-            @foreach (Incident incident in Model.Incidents)
+            @foreach (Incident incident in Model)
                 {
 
             <tr>

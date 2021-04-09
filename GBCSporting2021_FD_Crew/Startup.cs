@@ -91,9 +91,12 @@ namespace GBCSporting2021_FD_Crew
                     name: "incident",
                     pattern: "{controller=Incident}/{action=List}/{id?}");
 
+
+                // Tech Incidents routes
+
                 endpoints.MapControllerRoute(
                    name: "techincident",
-                   pattern: "{controller=Incident}/{action=SelectTech}/{id?}");
+                   pattern: "{controller=TechIncident}/{action=Get}/{id?}");
 
 
                 // Registration route
