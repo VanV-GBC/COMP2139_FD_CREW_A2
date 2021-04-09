@@ -29,6 +29,8 @@ namespace GBCSporting2021_FD_Crew.Controllers
 
         // List GET method - gets list view.
         [HttpGet]
+
+        [Route("Products")]
         public IActionResult List(string id = "All")
         {
             List<Product> products;

@@ -35,7 +35,7 @@ namespace GBCSporting2021_FD_Crew
 
             services.AddRouting(options => {
                 options.LowercaseUrls = true;
-                options.AppendTrailingSlash = true;
+                options.AppendTrailingSlash = false;
             });
         }
 

@@ -28,6 +28,8 @@ namespace COMP2139_FD_CREW.Controllers
 
         // List GET method - gets list view.
         [HttpGet]
+
+        [Route("Incidents")]
         public IActionResult List(string filter = "all")
         {
             var data = new IncidentListViewModel();
