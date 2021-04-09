@@ -23,7 +23,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
             ViewBag.CurrentPages = "Home";
             return View();
         }
-
+        [Route("About")]
         public IActionResult About()
         {
             ViewBag.CurrentPages = "About";

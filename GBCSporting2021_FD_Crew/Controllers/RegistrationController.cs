@@ -16,6 +16,8 @@ namespace GBCSporting2021_FD_Crew.Controllers
 
         // List GET method - gets list view
         [HttpGet]
+
+        [Route("Registration")]
         public IActionResult List()
         {
             ViewBag.CurrentPages = "Registration";

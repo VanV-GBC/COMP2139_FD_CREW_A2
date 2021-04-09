@@ -24,7 +24,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
                 .ToList();
         }
 
-
+       [Route("/")]
         public IActionResult Index()
         {
             return RedirectToAction("List");
@@ -36,6 +36,8 @@ namespace GBCSporting2021_FD_Crew.Controllers
 
         // List GET method - gets list view.
         [HttpGet]
+
+        [Route("Customers")]
         public IActionResult List(String id = "All")
         {
 
