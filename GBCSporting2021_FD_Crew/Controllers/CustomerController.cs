@@ -13,8 +13,6 @@ namespace GBCSporting2021_FD_Crew.Controllers
 
         private SportsProContext context;
         private List<Country> countries;
-        private List<Incident> incidents;
-        private List<Technician> technicians;
 
         public CustomerController(SportsProContext contx) 
         {
