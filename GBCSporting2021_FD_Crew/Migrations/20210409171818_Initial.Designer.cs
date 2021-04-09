@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GBCSporting2021_FD_Crew.Migrations
 {
     [DbContext(typeof(SportsProContext))]
-    [Migration("20210404182858_Initial")]
+    [Migration("20210409171818_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

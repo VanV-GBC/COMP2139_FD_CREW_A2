@@ -35,7 +35,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
             if (id == "All")
             {
                 technicians = context.Technicians
-                    .OrderBy(p => p.TechnicianId)
+                    .OrderBy(t => t.TechnicianId)
                     .ToList();
             }
             else

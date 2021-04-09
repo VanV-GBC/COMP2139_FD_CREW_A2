@@ -15,62 +15,107 @@
 <h1>@ViewBag.Title</h1>
 
 <form asp-action="@ViewBag.Action" method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
-    <div class="form-group">
-        <label asp-for="FirstName">First Name</label>
-        <input asp-for="FirstName" class="form-control">
+    <div class="form-group row">
+        <div class="col-sm-2"><label>First Name:</label></div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="@Model.FirstName" class="form-control" />
+        </div>
+        <div class="col">
+            <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="LastName">Last Name</label>
-        <input asp-for="LastName" class="form-control">
+    <div class="form-group row">
+        <div class="col-sm-2"><label>Last Name:</label></div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="@Model.LastName" class="form-control" />
+        </div>
+        <div class="col">
+            <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Address">Address</label>
-        <input asp-for="Address" class="form-control">
+    <div class="form-group row">
+        <div class="col-sm-2"><label>Address:</label></div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="@Model.Address" class="form-control" />
+        </div>
+        <div class="col">
+            <span asp-validation-for="@Model.Address" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="City">City</label>
-        <input asp-for="City" class="form-control">
+    <div class="form-group row">
+        <div class="col-sm-2"><label>City:</label></div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="@Model.City" class="form-control" />
+        </div>
+        <div class="col">
+            <span asp-validation-for="@Model.City" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="StateProvince">State/Province</label>
-        <input asp-for="StateProvince" class="form-control">
+    <div class="form-group row">
+        <div class="col-sm-2"><label>State/Province:</label></div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="@Model.StateProvince" class="form-control" />
+        </div>
+        <div class="col">
+            <span asp-validation-for="@Model.StateProvince" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="PostalCode">Postal Code</label>
-        <input asp-for="PostalCode" class="form-control">
+    <div class="form-group row">
+        <div class="col-sm-2"><label>Postal Code:</label></div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="@Model.PostalCode" class="form-control" />
+        </div>
+        <div class="col">
+            <span asp-validation-for="@Model.PostalCode" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="CountryId">Country</label>
-        <select asp-for="CountryId"
-                asp-items="@(new SelectList(ViewBag.Countries,
+    <div class="form-group row">
+        <div class="col-sm-2"><label asp-for="CountryId">Country:</label></div>
+        <div class="col-sm-4">
+            <select asp-for="CountryId"
+                    asp-items="@(new SelectList(ViewBag.Countries,
                              "CountryId", "CountryName",
                              Model.CountryId))"
-                class="form-control"></select>
+                    class="form-control">
+                <option value="invalid">---Select a country---</option>
+            </select>
+        </div>
     </div>
 
+        <div class="form-group row">
+            <div class="col-sm-2"><label>Email:</label></div>
+            <div class="col-sm-4">
+                <input type="text" asp-for="Email" class="form-control" />
+            </div>
+            <div class="col">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Email">Email</label>
-        <input asp-for="Email" class="form-control">
-    </div>
+        <div class="form-group row">
+            <div class="col-sm-2"><label>Phone Number:</label></div>
+            <div class="col-sm-4">
+                <input type="text" asp-for="@Model.Phone" class="form-control" />
+            </div>
+            <div class="col">
+                <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+            </div>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Phone">Phone Number</label>
-        <input asp-for="Phone" class="form-control">
-    </div>
 
 
-    <input type="hidden" asp-for="CustomerId" />
+        <input type="hidden" asp-for="CustomerId" />
 
-    <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
-    <a asp-action="List" class="btn btn-primary">Cancel</a>
+        <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
+        <a asp-action="List" class="btn btn-primary">Cancel</a>
 </form>

@@ -30,7 +30,7 @@ namespace COMP2139_FD_CREW.Controllers
         [HttpGet]
         public IActionResult List(string filter = "all")
         {
-            var data = new IncedentListViewModel();
+            var data = new IncidentListViewModel();
             List<Incident> incidents = new List<Incident>();
             IQueryable<Incident> query = context.Incidents
                 .Include(i => i.Customer)
@@ -61,7 +61,7 @@ namespace COMP2139_FD_CREW.Controllers
             List<Customer> customers = context.Customers.ToList();
             List<Product> products = context.Products.ToList();
             List<Technician> technicians = context.Technicians.ToList();
-            IncedentEditModel data = new IncedentEditModel
+            IncidentEditModel data = new IncidentEditModel
             {
                 Customers = customers,
                 Products = products,
@@ -74,7 +74,7 @@ namespace COMP2139_FD_CREW.Controllers
 
         // POST - adds incident
         [HttpPost]
-        public IActionResult Add(IncedentEditModel data)
+        public IActionResult Add(IncidentEditModel data)
         {
 
             if (ModelState.IsValid)
@@ -112,7 +112,7 @@ namespace COMP2139_FD_CREW.Controllers
             List<Customer> customers = context.Customers.ToList();
             List<Product> products = context.Products.ToList();
             List<Technician> technicians = context.Technicians.ToList();
-            IncedentEditModel data = new IncedentEditModel
+            IncidentEditModel data = new IncidentEditModel
             {
                 Customers = customers,
                 Products = products,
@@ -127,7 +127,7 @@ namespace COMP2139_FD_CREW.Controllers
         // POST - edit incident
 
         [HttpPost]
-        public IActionResult Edit(IncedentEditModel data)
+        public IActionResult Edit(IncidentEditModel data)
         {
 
             if (ModelState.IsValid)

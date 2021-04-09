@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GBCSporting2021_FD_Crew.Models
 {
-    public class IncedentListViewModel
+    public class IncidentListViewModel
     {
         private List<Incident> incidents {get; set;}
         private string filter;

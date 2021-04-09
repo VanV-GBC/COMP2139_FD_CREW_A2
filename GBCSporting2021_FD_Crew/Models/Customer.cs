@@ -4,18 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GBCSporting2021_FD_Crew.Models
 {
     public class Customer
     {
 
-        // will have to test all the regex validations
-
         public int CustomerId { get; set; }
 
         [Required(ErrorMessage = "Please input a first name")]
-
         [RegularExpression("^([A-Z][a-z]+([ ]?[a-z]?['-]?[A-Z][a-z]+)*)$",
             ErrorMessage = "Please input a valid, properly formatted first name")]
         public String FirstName { get; set; }
@@ -48,8 +46,8 @@ namespace GBCSporting2021_FD_Crew.Models
         public Country Country { get; set; }
         
         
-        [RegularExpression("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
-            ErrorMessage = "Please input a valid, properly formatted email address.")]
+        [DataType(DataType.EmailAddress)]
+        [Remote("CheckEmail", "Validation")]
         public String? Email { get; set; }
 
 

@@ -11,6 +11,21 @@ for details on configuring this project to bundle and minify static web assets. 
     border-radius: 15px;
 }
 
+
+.input-validation-error {
+    border: 2px solid #dc3545;
+    background-color: #faebd7;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.validation-summary-errors ul {
+    list-style: none;
+} 
+
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;

@@ -13,15 +13,13 @@ namespace GBCSporting2021_FD_Crew.Controllers
 
         private SportsProContext context;
         private List<Country> countries;
-        //private List<Incident> incidents;
-        //private List<Technician> technicians;
+        private List<Incident> incidents;
+        private List<Technician> technicians;
 
-        public CustomerController(SportsProContext contx)
+        public CustomerController(SportsProContext contx) 
         {
             context = contx;
-            countries = context.Countries
-                .OrderBy(c => c.CountryId)
-                .ToList();
+            countries = context.Countries.OrderBy(c => c.CountryId).ToList();
         }
 
 
@@ -81,6 +79,14 @@ namespace GBCSporting2021_FD_Crew.Controllers
         [HttpPost]
         public IActionResult Add(Customer customer)
         {
+            if (TempData["okEmail"] == null)
+            {
+                string msg = Check.EmailExists(context, customer.Email);
+                if (!String.IsNullOrEmpty(msg))
+                {
+                    ModelState.AddModelError(nameof(Customer.Email), msg) ;
+                }
+            }
             if (ModelState.IsValid)
             {
                 context.Customers.Add(customer);
@@ -91,6 +97,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
             {
                 ViewBag.Action = "Add";
                 ViewBag.Countries = countries;
+                ModelState.AddModelError("", "Please address the errors in the form.");
                 return View("CustomerEdit", customer);
             }
         }
@@ -102,7 +109,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
         public IActionResult Edit(int id)
         {
             Customer customer = context.Customers
-                // .Include(c => c.CountryId)
+                .Include(c => c.CountryId)
                 .FirstOrDefault(c => c.CustomerId == id);
 
 
@@ -116,6 +123,14 @@ namespace GBCSporting2021_FD_Crew.Controllers
         [HttpPost]
         public IActionResult Edit(Customer customer)
         {
+            if (TempData["okEmail"] == null)
+            {
+                string msg = Check.EmailExists(context, customer.Email);
+                if (!String.IsNullOrEmpty(msg))
+                {
+                    ModelState.AddModelError(nameof(Customer.Email), msg);
+                }
+            }
             if (ModelState.IsValid)
             {
                 context.Customers.Update(customer);
