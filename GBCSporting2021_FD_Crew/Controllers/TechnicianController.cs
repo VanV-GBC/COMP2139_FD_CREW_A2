@@ -77,6 +77,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
             {
                 context.Technicians.Add(technician);
                 context.SaveChanges();
+                TempData["message"] = $"{technician.Name} Was Added.";
                 return RedirectToAction("List");
             }
             else
@@ -109,6 +110,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
             {
                 context.Technicians.Update(technician);
                 context.SaveChanges();
+                TempData["message"] = $"{technician.Name} Was Edited.";
                 return RedirectToAction("List");
             }
             else
@@ -137,6 +139,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
         [HttpPost]
         public IActionResult Delete(Technician technician)
         {
+            TempData["message"] = $"{technician.Name} Was Deleted.";
             context.Technicians.Remove(technician);
             context.SaveChanges();
             return RedirectToAction("List");
