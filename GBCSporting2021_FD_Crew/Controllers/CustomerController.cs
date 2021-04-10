@@ -11,28 +11,19 @@ namespace GBCSporting2021_FD_Crew.Controllers
     public class CustomerController : Controller
     {
 
-        private SportsProContext context;
+        private Repository<Customer> data { get; set; }
         private List<Country> countries;
 
-        public CustomerController(SportsProContext contx) 
-        {
-            context = contx;
-            countries = context.Countries.OrderBy(c => c.CountryId).ToList();
-        }
+        public CustomerController(SportsProContext contx) => data = new Repository<Customer>(contx);
 
-       [Route("/")]
-        public IActionResult Index()
-        {
-            return RedirectToAction("List");
-        }
-
+        [Route("/")]
+        public IActionResult Index() => RedirectToAction("List");
 
         //----------------------List View
 
 
         // List GET method - gets list view.
         [HttpGet]
-
         [Route("Customers")]
         public IActionResult List(String id = "All")
         {
