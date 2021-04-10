@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GBCSporting2021_FD_Crew.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace GBCSporting2021_FD_Crew.Controllers
@@ -12,10 +13,22 @@ namespace GBCSporting2021_FD_Crew.Controllers
     {
 
         private SportsProContext context;
+        private List<Product> products;
+        private List<Technician> technicians;
+        private List<Customer> customers;
 
         public TechIncidentController(SportsProContext contx)
         {
             context = contx;
+            products = context.Products
+                    .OrderBy(p => p.ProductId)
+                    .ToList();
+            technicians = context.Technicians
+                    .OrderBy(t => t.TechnicianId)
+                    .ToList();
+            customers = context.Customers
+                    .OrderBy(c => c.CustomerId)
+                    .ToList();
         }
 
         public IActionResult Index()
@@ -35,56 +48,61 @@ namespace GBCSporting2021_FD_Crew.Controllers
 
 
         [HttpPost]
-        public IActionResult List(Incident incident)
+        public IActionResult List(int TechnicianId)
         {
-            var i = context.Incidents.Where(t => t.TechnicianId == incident.TechnicianId).ToList();
-            return View(i);
+            List<Incident> incidents = new List<Incident>();
+            IQueryable<Incident> query = context.Incidents
+                .Where(t => t.TechnicianId == TechnicianId).Include(i => i.Customer).Include(i => i.Product);
+
+            incidents = query.ToList();
+            return View(incidents);
         }
         // GET - gets edit incident view
         [HttpGet]
         public IActionResult Edit(int id)
         {
             Incident incident = context.Incidents
+                .Include(i => i.Product)
+                .Include(i => i.Customer)
+                .Include(i => i.Technician)
                 .FirstOrDefault(i => i.IncidentId == id);
-            List<Customer> customers = context.Customers.ToList();
-            List<Product> products = context.Products.ToList();
-            List<Technician> technicians = context.Technicians.ToList();
-            IncidentEditModel data = new IncidentEditModel
-            {
-                Customers = customers,
-                Products = products,
-                Technicians = technicians,
-                Action = "Edit",
-                Incident = incident
-            };
-            return View("IncidentEdit", data);
+
+            ViewBag.Action = "Edit";
+            ViewBag.Products = products;
+            ViewBag.Technicians = technicians;
+            ViewBag.Customers = customers;
+
+            return View("IncidentEdit", incident);
 
         }
 
         // POST - edit incident
 
         [HttpPost]
-        public IActionResult Edit(IncidentEditModel data)
+        public IActionResult Edit(Incident incident)
         {
 
             if (ModelState.IsValid)
             {
-                context.Incidents.Update(data.Incident);
+                context.Incidents.Update(incident);
                 context.SaveChanges();
                 return RedirectToAction("List");
             }
             else
             {
-                List<Customer> customers = context.Customers.ToList();
-                List<Product> products = context.Products.ToList();
-                List<Technician> technicians = context.Technicians.ToList();
-                data.Customers = customers;
-                data.Products = products;
-                data.Technicians = technicians;
-                data.Action = "Edit";
-                return View("IncidentEdit", data);
+                incident.Product = context.Products.Find(incident.IncidentId);
+                incident.Technician = context.Technicians.Find(incident.IncidentId);
+                incident.Customer = context.Customers.Find(incident.IncidentId);
+
+                ViewBag.Action = "Edit";
+                ViewBag.Products = products;
+                ViewBag.Technicians = technicians;
+                ViewBag.Customers = customers;
+
+                return View("IncidentEdit", incident);
             }
         }
+
 
     }
 }

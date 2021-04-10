@@ -1,0 +1,77 @@
+@model Incident
+@{
+
+    ViewData["Title"] = ViewBag.Title;
+
+    string title = ViewBag.Action + " Incident";
+    ViewBag.Title = title;
+}
+
+
+@section scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<h1>@ViewBag.Title</h1>
+
+<form asp-action="@ViewBag.Action" method="post" asp-controller="TechIncident">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="TechnicianId">Technician</label>
+        <select disabled asp-for="TechnicianId"
+                asp-items="@(new SelectList(ViewBag.Technicians,
+                             "TechnicianId", "Name",
+                             Model.TechnicianId))"
+                class="form-control"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CustomerId">Customer</label>
+        <select disabled asp-for="CustomerId"
+                asp-items="@(new SelectList(ViewBag.Customers, "CustomerId", "FirstName", Model.CustomerId))"
+                class="form-control"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ProductId">Product</label>
+        <select disabled asp-for="ProductId"
+                asp-items="@(new SelectList(ViewBag.Products,
+                             "ProductId", "ProductName",
+                             Model.ProductId))"
+                class="form-control"></select>
+
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="Title">Title</label>
+        <input asp-for="Title" disabled class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="dateOpened">Date Opened</label>
+        <input asp-for="dateOpened" disabled value="@(DateTime.Now)" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="dateClosed">Date Closed</label>
+
+        <input asp-for="dateClosed" value="" class="form-control">
+
+    </div>
+
+
+    <input type="hidden" asp-for="TechnicianId" />
+
+    <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
+    <a asp-action="List" class="btn btn-primary">Cancel</a>
+
+</form>
+
