@@ -20,7 +20,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
             countries = context.Countries.OrderBy(c => c.CountryId).ToList();
         }
 
-       [Route("/")]
+       
         public IActionResult Index()
         {
             return RedirectToAction("List");
