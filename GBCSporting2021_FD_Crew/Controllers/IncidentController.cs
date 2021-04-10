@@ -83,6 +83,7 @@ namespace COMP2139_FD_CREW.Controllers
             {
                 context.Incidents.Add(data.Incident);
                 context.SaveChanges();
+                TempData["message"] = $"{data.Incident.Title} Was Added.";
                 return RedirectToAction("List");
             }
             else
@@ -136,6 +137,7 @@ namespace COMP2139_FD_CREW.Controllers
             {
                 context.Incidents.Update(data.Incident);
                 context.SaveChanges();
+                TempData["message"] = $"{data.Incident.Title} Was Edited.";
                 return RedirectToAction("List");
             }
             else
@@ -169,6 +171,7 @@ namespace COMP2139_FD_CREW.Controllers
         [HttpPost]
         public IActionResult Delete(Incident incident)
         {
+            TempData["message"] = $"{incident.Title} Was Deleted.";
             context.Incidents.Remove(incident);
             context.SaveChanges();
             return RedirectToAction("List");
