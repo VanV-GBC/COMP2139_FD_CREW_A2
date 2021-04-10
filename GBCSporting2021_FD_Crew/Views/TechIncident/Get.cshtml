@@ -13,10 +13,10 @@
             @foreach (Technician technician in ViewBag.Technicians)
             {
 
-                <option value="@technician.TechnicianId">@technician.Name</option>
+                <option value="@technician.TechnicianId" name="id">@technician.Name</option>
             }
         </select>
         <br/>
         <button class="btn btn-primary" type="submit" name="submit" > Select</button>
-    </div>
+    </div> 
 </form>

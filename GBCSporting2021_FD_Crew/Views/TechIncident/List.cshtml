@@ -1,4 +1,4 @@
-@model IEnumerable<Incident>
+@model List<Incident>
     @{
     ViewData["Title"] = "Incidents by Technician";
     }
@@ -33,7 +33,7 @@
                 <td>@incident.dateOpened</td>
                 <td>
                     <a asp-action="Edit" class="btn btn-primary"
-                       asp-route-id="@incident.IncidentId">Edit</a>
+                       asp-route-id="@incident.IncidentId" asp-controller="TechIncident">Edit</a>
                 </td>
             </tr>
                 }
