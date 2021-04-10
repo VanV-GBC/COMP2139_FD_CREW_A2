@@ -12,7 +12,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
     {
 
         private Repository<Customer> data { get; set; }
-        private List<Country> countries;
+        /*private List<Country> countries;*/
 
 
         public CustomerController(SportsProContext contx) => data = new Repository<Customer>(contx);
@@ -105,7 +105,6 @@ namespace GBCSporting2021_FD_Crew.Controllers
         public IActionResult Edit(int id)
         {
 
-            //not sure about this
             Customer customer = data.Get(id);
             ViewBag.Action = "Edit";
             ViewBag.CurrentPages = "Customer";

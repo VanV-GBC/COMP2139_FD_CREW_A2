@@ -10,9 +10,8 @@ namespace GBCSporting2021_FD_Crew.Models
 
         private SportsProContext context { get; set; }
         public CustomerUnitOfWork(SportsProContext contx) => context = contx;
-        private Repository<Customer> customerData;
-        private Repository<Country> countryData;
 
+        private Repository<Customer> customerData;
         public Repository<Customer> Customers
         {
             get
@@ -22,5 +21,20 @@ namespace GBCSporting2021_FD_Crew.Models
                 return customerData;
             }
         }
+
+        private Repository<Country> countryData;
+        public Repository<Country> Countries
+        {
+            get
+            {
+                if (countryData == null)
+                    countryData = new Repository<Country>(context);
+                return countryData;
+            }
+        }
+
+
+
+
     } 
 }

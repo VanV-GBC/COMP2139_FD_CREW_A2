@@ -6,6 +6,10 @@
         Repository<Customer> Customers { get; }
         Repository<Country> Countries { get; }
 
-        void DeleteCustomer(Customer customer);
+/*        void AddCustomer(Customer customer);
+        void UpdateCustomer(Customer customer, int id);
+        void DeleteCustomer(Customer customer);*/
+        
+
     }
 }
