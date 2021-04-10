@@ -51,8 +51,8 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="dateOpened">Date Opened</label>
-        <input asp-for="dateOpened" disabled value="@(DateTime.Now)" class="form-control">
+        <label asp-for="Title">Date Opened</label>
+        <input asp-for="dateOpened" disabled class="form-control">
     </div>
 
     <div class="form-group">
@@ -63,12 +63,20 @@
     <div class="form-group">
         <label asp-for="dateClosed">Date Closed</label>
 
-        <input asp-for="dateClosed" value="" class="form-control">
+        <input asp-for="dateClosed" class="form-control">
 
     </div>
 
 
     <input type="hidden" asp-for="TechnicianId" />
+    <input type="hidden" asp-for="CustomerId" />
+    <input type="hidden" asp-for="ProductId" />
+    <input type="hidden" asp-for="Title" />
+    <input type="hidden" asp-for="IncidentId" />
+    <input type="hidden" asp-for="dateOpened" />
+    <input type="hidden" asp-for="Description" />
+    <input type="hidden" asp-for="dateClosed" />
+
 
     <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
     <a asp-action="List" class="btn btn-primary">Cancel</a>
