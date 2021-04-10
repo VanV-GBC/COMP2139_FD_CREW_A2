@@ -5,12 +5,13 @@ namespace GBCSporting2021_FD_Crew.Controllers
 {
     public class ValidationController : Controller
     {
-        private SportsProContext context;
-        public ValidationController(SportsProContext ctx) => context = ctx;
-       
+
+        private Repository<Customer> data { get; set; }
+        public ValidationController(SportsProContext contx) => data = new Repository<Customer>(contx);
+
         public JsonResult CheckEmail(string emailAddy)
         {
-            string msg = Check.EmailExists(context, emailAddy);
+            string msg = Check.EmailExists(data, emailAddy);
             if (string.IsNullOrEmpty(msg))
             {
                 TempData["okEmail"] = true;

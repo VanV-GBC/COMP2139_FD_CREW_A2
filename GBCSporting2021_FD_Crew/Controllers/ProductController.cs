@@ -10,13 +10,10 @@ namespace GBCSporting2021_FD_Crew.Controllers
 {
     public class ProductController : Controller
     {
+        private Repository<Product> data { get; set; }
 
-        private SportsProContext context;
 
-        public ProductController(SportsProContext contx)
-        {
-            context = contx;
-        }
+        public ProductController(SportsProContext contx) => data = new Repository<Product>(contx);
 
 
         public IActionResult Index()
@@ -38,17 +35,17 @@ namespace GBCSporting2021_FD_Crew.Controllers
             List<Product> products;
             if (id == "All")
             {
-                products = context.Products
-                    .OrderBy(p => p.ProductId)
-                    .ToList();
+                products = (List<Product>) data.List(new QueryOptions<Product> { 
+                    OrderBy = p => p.ProductId
+                });
             }
             else
             {
-                // experimenting here
-                products = context.Products
-                    .Where(p => p.ProductCode == id)
-                    .OrderBy(p => p.ProductId)
-                    .ToList();
+                // same thing, reaching this ideally shouldn't be possible.
+                products = (List<Product>)data.List(new QueryOptions<Product>
+                {
+                    OrderBy = p => p.ProductId
+                });
             }
 
             ViewBag.CurrentPages = "Product";
@@ -75,8 +72,8 @@ namespace GBCSporting2021_FD_Crew.Controllers
 
             if (ModelState.IsValid)
             {
-                context.Products.Add(product);
-                context.SaveChanges();
+                data.Insert(product);
+                data.Save();
                 TempData["message"] = $"{product.ProductName} Was Added to Database.";
                 return RedirectToAction("List");
             }
@@ -84,6 +81,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
             {
                 ViewBag.Action = "Add";
                 ViewBag.CurrentPages = "Product";
+                TempData["message"] = $"{product.ProductName} add failed ";
                 return View("ProductEdit", product);
             }
         }
@@ -94,8 +92,8 @@ namespace GBCSporting2021_FD_Crew.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            Product product = context.Products
-                .FirstOrDefault(p => p.ProductId == id);
+            //not sure about this
+            Product product = data.Get(id);
 
             ViewBag.Action = "Edit";
             ViewBag.CurrentPages = "Product";
@@ -109,15 +107,16 @@ namespace GBCSporting2021_FD_Crew.Controllers
 
             if (ModelState.IsValid)
             {
-                context.Products.Update(product);
-                context.SaveChanges();
-                TempData["message"] = $"{product.ProductName} Was Edited.";
+                data.Update(product);
+                data.Save();
+                TempData["message"] = $"{product.ProductName} was Updated.";
                 return RedirectToAction("List");
             }
             else
             {
                 ViewBag.Action = "Edit";
                 ViewBag.CurrentPages = "Product";
+                TempData["message"] = $"{product.ProductName} update failed.";
                 return View("ProductEdit", product);
             }
         }
@@ -127,10 +126,9 @@ namespace GBCSporting2021_FD_Crew.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-
-            Product product = context.Products
-                .FirstOrDefault(p => p.ProductId == id);
+            Product product = data.Get(id);
             ViewBag.CurrentPages = "Product";
+            TempData["message"] = $"{product.ProductName} deleted";
             return View("ProductDelete", product);
         }
 
@@ -140,8 +138,8 @@ namespace GBCSporting2021_FD_Crew.Controllers
         {
             string temp = product.ProductName;
             TempData["message"] = $"{temp} Was Deleted.";
-            context.Products.Remove(product);
-            context.SaveChanges();
+            data.Delete(product);
+            data.Save();
             return RedirectToAction("List");
         }
     }

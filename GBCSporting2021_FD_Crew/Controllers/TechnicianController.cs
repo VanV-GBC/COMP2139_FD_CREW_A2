@@ -10,13 +10,10 @@ namespace GBCSporting2021_FD_Crew.Controllers
     public class TechnicianController : Controller
     {
 
+        private Repository<Technician> data { get; set; }
 
-        private SportsProContext context;
 
-        public TechnicianController(SportsProContext contx)
-        {
-            context = contx;
-        }
+        public TechnicianController(SportsProContext contx) => data = new Repository<Technician>(contx); 
 
 
         public IActionResult Index()
@@ -29,28 +26,27 @@ namespace GBCSporting2021_FD_Crew.Controllers
         // List GET method - gets list view.
 
         [HttpGet]
-
         [Route("Technicians")]
         public IActionResult List(string id = "All")
         {
             List<Technician> technicians;
             if (id == "All")
             {
-                technicians = context.Technicians
-                    .OrderBy(t => t.TechnicianId)
-                    .ToList();
+                technicians = (List<Technician>)data.List(new QueryOptions<Technician>
+                {
+                    OrderBy = t => t.TechnicianId
+                });
             }
             else
             {
-                // experimenting here
-                technicians = context.Technicians
-                    .Where(t => t.Name == id)
-                    .OrderBy(t => t.TechnicianId)
-                    .ToList();
+                // same thing, reaching this ideally shouldn't be possible.
+                technicians = (List<Technician>)data.List(new QueryOptions<Technician>
+                {
+                    OrderBy = t => t.TechnicianId
+                });
             }
 
             ViewBag.CurrentPages = "Technician";
-
             return View("TechnicianList", technicians);
         }
 
@@ -75,15 +71,16 @@ namespace GBCSporting2021_FD_Crew.Controllers
 
             if (ModelState.IsValid)
             {
-                context.Technicians.Add(technician);
-                context.SaveChanges();
-                TempData["message"] = $"{technician.Name} Was Added.";
+                data.Insert(technician);
+                data.Save();
+                TempData["message"] = $"{technician.Name} Was Added to Database.";
                 return RedirectToAction("List");
             }
             else
             {
                 ViewBag.Action = "Add";
-                ViewBag.CurrentPages = "Technician";
+                ViewBag.CurrentPages = "Product";
+                TempData["message"] = $"{technician.Name} add failed ";
                 return View("TechnicianEdit", technician);
             }
         }
@@ -94,12 +91,12 @@ namespace GBCSporting2021_FD_Crew.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            Technician technician = context.Technicians
-                .FirstOrDefault(t => t.TechnicianId == id);
+            //not sure about this
+            Technician technician = data.Get(id);
 
             ViewBag.Action = "Edit";
             ViewBag.CurrentPages = "Technician";
-            return View("TechnicianEdit", technician);
+            return View("ProductEdit", technician);
         }
 
         // POST - edit technician
@@ -108,40 +105,37 @@ namespace GBCSporting2021_FD_Crew.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Technicians.Update(technician);
-                context.SaveChanges();
-                TempData["message"] = $"{technician.Name} Was Edited.";
+                data.Update(technician);
+                data.Save();
+                TempData["message"] = $"{technician.Name} was edited.";
                 return RedirectToAction("List");
             }
             else
             {
-                ViewBag.Action = "Edit";
-                ViewBag.CurrentPages = "Technician";
+                ViewBag.Action = "Add";
+                ViewBag.CurrentPages = "Product";
+                TempData["message"] = $"{technician.Name} edit failed ";
                 return View("TechnicianEdit", technician);
             }
         }
 
         //----------------------Delete Technician
-
-
-        // GET - gets delete technician view
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            Technician technician = context.Technicians
-                .FirstOrDefault(t => t.TechnicianId == id);
+            Technician technician = data.Get(id);
             ViewBag.CurrentPages = "Technician";
-            return View("TechnicianDelete", technician);
+            return View("ProductDelete", technician);
         }
 
         // POST - deletes technician
-
         [HttpPost]
         public IActionResult Delete(Technician technician)
         {
-            TempData["message"] = $"{technician.Name} Was Deleted.";
-            context.Technicians.Remove(technician);
-            context.SaveChanges();
+            string temp = technician.Name;
+            TempData["message"] = $"{temp} Was Deleted.";
+            data.Delete(technician);
+            data.Save();
             return RedirectToAction("List");
         }
 

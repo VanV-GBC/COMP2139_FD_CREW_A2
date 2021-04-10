@@ -14,41 +14,42 @@ namespace GBCSporting2021_FD_Crew.Controllers
         private Repository<Customer> data { get; set; }
         private List<Country> countries;
 
+
         public CustomerController(SportsProContext contx) => data = new Repository<Customer>(contx);
 
-        [Route("/")]
+        //[Route("/")]
         public IActionResult Index() => RedirectToAction("List");
 
         //----------------------List View
 
 
         // List GET method - gets list view.
+
         [HttpGet]
         [Route("Customers")]
-        public IActionResult List(String id = "All")
+        public IActionResult List(string id = "All")
         {
-
-
-
             List<Customer> customers;
-
             if (id == "All")
             {
-                customers = context.Customers
-                    .OrderBy(c => c.CustomerId).ToList();
+                customers = (List<Customer>) data.List(new QueryOptions<Customer>
+                {
+                    OrderBy = c => c.CustomerId
+                });
             }
             else
             {
-                customers = context.Customers
-                    .Where(c => c.Country.CountryId == id)
-                    .OrderBy(c => c.CustomerId).ToList();
+                // same thing, reaching this ideally shouldn't be possible.
+                customers = (List<Customer>)data.List(new QueryOptions<Customer>
+                {
+                    OrderBy = c => c.CustomerId
+                });
             }
-            ViewBag.CurrentPages = "Customer";
-            ViewBag.Countries = countries;
-            ViewBag.SelectedCountryName = id;
 
+            ViewBag.CurrentPages = "Customer";
             return View("CustomerList", customers);
         }
+
 
 
         //----------------------Add Customer
@@ -59,7 +60,6 @@ namespace GBCSporting2021_FD_Crew.Controllers
         public IActionResult Add()
         {
             Customer customer = new Customer();
-            customer.Country = context.Countries.Find("CAN");
             ViewBag.Action = "Add";
             ViewBag.Countries = countries;
             ViewBag.CurrentPages = "Customer";
@@ -70,28 +70,32 @@ namespace GBCSporting2021_FD_Crew.Controllers
         [HttpPost]
         public IActionResult Add(Customer customer)
         {
+
+
             if (TempData["okEmail"] == null)
             {
-                string msg = Check.EmailExists(context, customer.Email);
+                string msg = Check.EmailExists(data, customer.Email);
                 if (!String.IsNullOrEmpty(msg))
                 {
-                    ModelState.AddModelError(nameof(Customer.Email), msg) ;
+                    ModelState.AddModelError(nameof(Customer.Email), msg);
                 }
             }
+
             if (ModelState.IsValid)
             {
-                context.Customers.Add(customer);
-                context.SaveChanges();
-                TempData["message"] = $"{customer.FirstName} Was Added.";
+                data.Insert(customer);
+                data.Save();
+                TempData["message"] = $"{customer.FirstName} {customer.LastName} Was Added to Database.";
                 return RedirectToAction("List");
             }
             else
             {
                 ViewBag.Action = "Add";
-                ViewBag.Countries = countries;
-                ModelState.AddModelError("", "Please address the errors in the form.");
+                ViewBag.CurrentPages = "Customer";
+                TempData["message"] = $"Addition of {customer.FirstName} {customer.LastName} failed";
                 return View("CustomerEdit", customer);
             }
+
         }
 
         //----------------------Edit Customer
@@ -100,15 +104,13 @@ namespace GBCSporting2021_FD_Crew.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            Customer customer = context.Customers
-                .Include(c => c.CountryId)
-                .FirstOrDefault(c => c.CustomerId == id);
 
-
+            //not sure about this
+            Customer customer = data.Get(id);
             ViewBag.Action = "Edit";
-            ViewBag.Countries = countries;
             ViewBag.CurrentPages = "Customer";
             return View("CustomerEdit", customer);
+
         }
 
         // POST - edit customer
@@ -117,39 +119,38 @@ namespace GBCSporting2021_FD_Crew.Controllers
         {
             if (TempData["okEmail"] == null)
             {
-                string msg = Check.EmailExists(context, customer.Email);
+                string msg = Check.EmailExists(data, customer.Email);
                 if (!String.IsNullOrEmpty(msg))
                 {
                     ModelState.AddModelError(nameof(Customer.Email), msg);
                 }
             }
+
             if (ModelState.IsValid)
             {
-                context.Customers.Update(customer);
-                context.SaveChanges();
-                TempData["message"] = $"{customer.FirstName} Was Edited.";
+                data.Update(customer);
+                data.Save();
+                TempData["message"] = $"{customer.FirstName} {customer.LastName} Was Edited.";
                 return RedirectToAction("List");
             }
             else
             {
-                ViewBag.Action = "Edit";
-                ViewBag.Countries = countries;
+                ViewBag.Action = "Add";
                 ViewBag.CurrentPages = "Customer";
+                TempData["message"] = $"Addition of {customer.FirstName} {customer.LastName} failed";
                 return View("CustomerEdit", customer);
-            };
+            }
         }
 
 
         //----------------------Delete Customer 
 
 
-        // GET - gets delete customer view
+        //----------------------Delete Product
         [HttpGet]
         public IActionResult Delete(int id)
         {
-
-            Customer customer = context.Customers
-                .FirstOrDefault(c => c.CustomerId == id);
+            Customer customer = data.Get(id);
             ViewBag.CurrentPages = "Customer";
             return View("CustomerDelete", customer);
         }
@@ -158,10 +159,9 @@ namespace GBCSporting2021_FD_Crew.Controllers
         [HttpPost]
         public IActionResult Delete(Customer customer)
         {
-            string temp = customer.FirstName;
-            TempData["message"] = $"{temp} Was Deleted.";
-            context.Customers.Remove(customer);
-            context.SaveChanges();
+            data.Delete(customer);
+            TempData["message"] = $"Id: {customer.CustomerId}, {customer.FirstName} {customer.LastName} deleted";
+            data.Save();
             return RedirectToAction("List");
         }
 

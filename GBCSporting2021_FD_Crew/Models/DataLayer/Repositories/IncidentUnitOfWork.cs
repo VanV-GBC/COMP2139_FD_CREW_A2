@@ -49,7 +49,7 @@
             }
         }
 
-        public void DeleteIncidents(Incident incident)
+        public void DeleteIncident(Incident incident)
         {
             var currentIncidents = Incidents.List(new QueryOptions<Incident>
             {
@@ -61,16 +61,40 @@
             }
         }
 
-        public void AddNewIncidents(Incident incident, int[] incidentids)
+        public void CreateIncident(Incident incident)
         {
-            foreach(int id in incidentids) 
+            // this is fucked for now - will fix later. gonna die if i don't sleep for a few hrs, i swear. 
+
+  /*          foreach(int id in incidentids) 
             {
                 Incident i = 
-                    new Incident {IncidentId = id, CustomerId =  }
-            }
+                    new Incident {IncidentId = id,  }
+            }*/
         }
 
 
+
+        public void UpdateIncident(Incident incident)
+        {
+            // this is fucked for now - will fix later. gonna die if i don't sleep for a few hrs, i swear. 
+
+            /*          foreach(int id in incidentids) 
+                      {
+                          Incident i = 
+                              new Incident {IncidentId = id,  }
+                      }*/
+        }
+
+        public void Save()
+        {
+            // this is fucked for now - will fix later. gonna die if i don't sleep for a few hrs, i swear. 
+
+            /*          foreach(int id in incidentids) 
+                      {
+                          Incident i = 
+                              new Incident {IncidentId = id,  }
+                      }*/
+        }
 
     }
 }
