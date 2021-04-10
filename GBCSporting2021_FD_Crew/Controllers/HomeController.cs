@@ -17,7 +17,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
         {
             _logger = logger;
         }
-
+        [Route("/")]
         public IActionResult Index()
         {
             ViewBag.CurrentPages = "Home";

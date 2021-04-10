@@ -15,11 +15,9 @@
 <h1>@ViewBag.Title</h1>
 
 <form asp-action="@ViewBag.Action" method="post">
-
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-
-    <div class="form-group row">
+    <div class="form-group">
         <div class="col-sm-2"><label>First Name:</label></div>
         <div class="col-sm-4">
             <input type="text" asp-for="@Model.FirstName" class="form-control" />
@@ -29,7 +27,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group">
         <div class="col-sm-2"><label>Last Name:</label></div>
         <div class="col-sm-4">
             <input type="text" asp-for="@Model.LastName" class="form-control" />
@@ -39,7 +37,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group">
         <div class="col-sm-2"><label>Address:</label></div>
         <div class="col-sm-4">
             <input type="text" asp-for="@Model.Address" class="form-control" />
@@ -49,7 +47,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group">
         <div class="col-sm-2"><label>City:</label></div>
         <div class="col-sm-4">
             <input type="text" asp-for="@Model.City" class="form-control" />
@@ -59,7 +57,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group">
         <div class="col-sm-2"><label>State/Province:</label></div>
         <div class="col-sm-4">
             <input type="text" asp-for="@Model.StateProvince" class="form-control" />
@@ -69,7 +67,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group">
         <div class="col-sm-2"><label>Postal Code:</label></div>
         <div class="col-sm-4">
             <input type="text" asp-for="@Model.PostalCode" class="form-control" />
@@ -79,7 +77,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group">
         <div class="col-sm-2"><label asp-for="CountryId">Country:</label></div>
         <div class="col-sm-4">
             <select asp-for="CountryId"
@@ -92,30 +90,31 @@
         </div>
     </div>
 
-        <div class="form-group row">
-            <div class="col-sm-2"><label>Email:</label></div>
-            <div class="col-sm-4">
-                <input type="text" asp-for="Email" class="form-control" />
-            </div>
-            <div class="col">
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
+    <div class="form-group">
+        <div class="col-sm-2"><label>Email:</label></div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="Email" class="form-control" />
         </div>
-
-        <div class="form-group row">
-            <div class="col-sm-2"><label>Phone Number:</label></div>
-            <div class="col-sm-4">
-                <input type="text" asp-for="@Model.Phone" class="form-control" />
-            </div>
-            <div class="col">
-                <span asp-validation-for="@Model.Phone" class="text-danger"></span>
-            </div>
+        <div class="col">
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"><label>Phone Number:</label></div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="@Model.Phone" class="form-control" />
+        </div>
+        <div class="col">
+            <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+        </div>
+    </div>
 
 
-
+    <div class="col-sm-2">
         <input type="hidden" asp-for="CustomerId" />
 
         <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
         <a asp-action="List" class="btn btn-primary">Cancel</a>
+    </div>
 </form>

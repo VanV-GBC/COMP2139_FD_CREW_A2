@@ -21,6 +21,8 @@ namespace GBCSporting2021_FD_Crew.Controllers
 
         public IActionResult Index()
         {
+            
+
             return RedirectToAction("List");
         }
 
@@ -75,6 +77,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
             {
                 context.Products.Add(product);
                 context.SaveChanges();
+                TempData["message"] = $"{product.ProductName} Was Added to Database.";
                 return RedirectToAction("List");
             }
             else
@@ -103,10 +106,12 @@ namespace GBCSporting2021_FD_Crew.Controllers
         [HttpPost]
         public IActionResult Edit(Product product)
         {
+
             if (ModelState.IsValid)
             {
                 context.Products.Update(product);
                 context.SaveChanges();
+                TempData["message"] = $"{product.ProductName} Was Edited.";
                 return RedirectToAction("List");
             }
             else
@@ -133,6 +138,8 @@ namespace GBCSporting2021_FD_Crew.Controllers
         [HttpPost]
         public IActionResult Delete(Product product)
         {
+            string temp = product.ProductName;
+            TempData["message"] = $"{temp} Was Deleted.";
             context.Products.Remove(product);
             context.SaveChanges();
             return RedirectToAction("List");
