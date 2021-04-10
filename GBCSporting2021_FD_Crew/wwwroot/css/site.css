@@ -5,10 +5,13 @@ body {
     background-color: #474747;
 }
 
-h1 {
+h1,h2,h5 {
     color: #D2D7DF;
 }
 
+.about-us {
+    color: #D2D7DF;
+}
 h3 {
     color: #D72638;
 }
