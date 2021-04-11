@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GBCSporting2021_FD_Crew.Models  
 {
-    public class CustomerUnitOfWork : ICustomertUnitOfWork
+    public class CustomerUnitOfWork : ICustomerUnitOfWork
     {
 
         private SportsProContext context { get; set; }
@@ -33,8 +33,21 @@ namespace GBCSporting2021_FD_Crew.Models
             }
         }
 
+        public void ClearCountries(Country country) {
+            var currentCountries = Countries.List(new QueryOptions<Country> { 
+                Where = c => c.CountryId == country.CountryId
+            });
+            foreach(Country c in currentCountries)
+            {
+                Countries.Delete(c);
+            }
+        
+        }
 
-
+        public SportsProContext GetContext()
+        {
+            return context;
+        }
 
     } 
 }

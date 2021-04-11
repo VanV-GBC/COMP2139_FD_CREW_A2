@@ -8,9 +8,5 @@
         Repository<Product> Products { get; }
         Repository<Incident> Incidents { get; }
 
-        void CreateIncident(Incident incident);
-        void DeleteIncident(Incident incident);
-        void UpdateIncident(Incident incident);
-        void Save();
     }
 }

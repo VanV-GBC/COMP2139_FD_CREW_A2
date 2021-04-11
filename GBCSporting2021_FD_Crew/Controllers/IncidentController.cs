@@ -11,12 +11,17 @@ namespace COMP2139_FD_CREW.Controllers
 {
     public class IncidentController : Controller
     {
-        private SportsProContext context;
+
+        private IncidentUnitOfWork workdata { get; set; }
+        public IncidentController(SportsProContext contx) =>
+            workdata = new IncidentUnitOfWork(contx);
+
+        /*private SportsProContext context;
 
         public IncidentController(SportsProContext contx)
         {
             context = contx;
-        }
+        }*/
 
         public IActionResult Index()
         {
@@ -34,10 +39,16 @@ namespace COMP2139_FD_CREW.Controllers
         {
             var data = new IncidentListViewModel();
             List<Incident> incidents = new List<Incident>();
+
+            var query = workdata.Incidents.List(new QueryOptions<Incident> { 
+                Includes = "Customer, Product"
+            });
+/*
+            
             IQueryable<Incident> query = context.Incidents
                 .Include(i => i.Customer)
                 .Include(i => i.Product);
-
+*/
             if (filter == "all")
             {
                 incidents = query.ToList();
@@ -60,9 +71,13 @@ namespace COMP2139_FD_CREW.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            List<Customer> customers = context.Customers.ToList();
-            List<Product> products = context.Products.ToList();
-            List<Technician> technicians = context.Technicians.ToList();
+            List<Customer> customers = new List<Customer>();
+            List<Product> products = (List<Product>) workdata.Products.List(new QueryOptions<Product> { 
+                OrderByDirection = "asc"
+            });
+            List<Technician> technicians = (List<Technician> )workdata.Technicians.List( new QueryOptions<Technician> { 
+                OrderByDirection = "asc"
+            });
             IncidentEditModel data = new IncidentEditModel
             {
                 Customers = customers,
@@ -81,16 +96,28 @@ namespace COMP2139_FD_CREW.Controllers
 
             if (ModelState.IsValid)
             {
-                context.Incidents.Add(data.Incident);
-                context.SaveChanges();
+                workdata.Incidents.Insert(data.Incident);
+                workdata.Incidents.Save();
                 TempData["message"] = $"{data.Incident.Title} Was Added.";
                 return RedirectToAction("List");
             }
             else
             {
-                List<Customer> customers = context.Customers.ToList();
-                List<Product> products = context.Products.ToList();
-                List<Technician> technicians = context.Technicians.ToList();
+                List<Customer> customers = (List<Customer>)workdata.Customers.List(new QueryOptions<Customer>
+                {
+                    OrderByDirection = "asc"
+                });
+
+                List<Product> products = (List<Product> ) workdata.Products.List(new QueryOptions<Product>
+                {
+                    OrderByDirection = "asc"
+                });
+
+                List<Technician> technicians = (List<Technician>)workdata.Technicians.List(new QueryOptions<Technician>
+                {
+                    OrderByDirection = "asc"
+                });
+
                 data.Customers = customers;
                 data.Products = products;
                 data.Technicians = technicians;
@@ -107,14 +134,30 @@ namespace COMP2139_FD_CREW.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            Incident incident = context.Incidents
-                .Include(i => i.Product)
-                .Include(i => i.Customer)
-                .Include(i => i.Technician)
-                .FirstOrDefault(i => i.IncidentId == id);
-            List<Customer> customers = context.Customers.ToList();
-            List<Product> products = context.Products.ToList();
-            List<Technician> technicians = context.Technicians.ToList();
+
+
+            Incident incident = workdata.Incidents.Get(id);
+
+            /*            Incident incident = context.Incidents
+                            .Include(i => i.Product)
+                            .Include(i => i.Customer)
+                            .Include(i => i.Technician)
+                            .FirstOrDefault(i => i.IncidentId == id);*/
+
+            List<Customer> customers = (List<Customer>) workdata.Customers.List(new QueryOptions<Customer> { 
+                OrderByDirection = "asc"
+            });
+            List<Product> products = (List<Product>) workdata.Products.List(new QueryOptions<Product>
+            {
+                OrderByDirection = "asc"
+            });
+            List<Technician> technicians = (List<Technician>)workdata.Technicians.List(new QueryOptions<Technician>
+            {
+                OrderByDirection = "asc"
+            });
+
+/*            List<Product> products = context.Products.ToList();
+            List<Technician> technicians = context.Technicians.ToList();*/
             IncidentEditModel data = new IncidentEditModel
             {
                 Customers = customers,
@@ -135,16 +178,25 @@ namespace COMP2139_FD_CREW.Controllers
 
             if (ModelState.IsValid)
             {
-                context.Incidents.Update(data.Incident);
-                context.SaveChanges();
+                workdata.Incidents.Update(data.Incident);
+                workdata.Incidents.Save();
                 TempData["message"] = $"{data.Incident.Title} Was Edited.";
                 return RedirectToAction("List");
             }
             else
             {
-                List<Customer> customers = context.Customers.ToList();
-                List<Product> products = context.Products.ToList();
-                List<Technician> technicians = context.Technicians.ToList();
+                List<Customer> customers = (List<Customer>)workdata.Customers.List(new QueryOptions<Customer>
+                {
+                    OrderByDirection = "asc"
+                });
+                List<Product> products = (List<Product>)workdata.Products.List(new QueryOptions<Product>
+                {
+                    OrderByDirection = "asc"
+                });
+                List<Technician> technicians = (List<Technician>)workdata.Technicians.List(new QueryOptions<Technician>
+                {
+                    OrderByDirection = "asc"
+                });
                 data.Customers = customers;
                 data.Products = products;
                 data.Technicians = technicians;
@@ -161,8 +213,7 @@ namespace COMP2139_FD_CREW.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            Incident incident = context.Incidents
-                 .FirstOrDefault(i => i.IncidentId == id);
+            Incident incident = workdata.Incidents.Get(id);
             ViewBag.CurrentPages = "Incident";
             return View("IncidentDelete", incident);
         }
@@ -172,8 +223,8 @@ namespace COMP2139_FD_CREW.Controllers
         public IActionResult Delete(Incident incident)
         {
             TempData["message"] = $"{incident.Title} Was Deleted.";
-            context.Incidents.Remove(incident);
-            context.SaveChanges();
+            workdata.Incidents.Delete(incident);
+            workdata.Incidents.Save();
             return RedirectToAction("List");
         }
 

@@ -96,7 +96,7 @@ namespace GBCSporting2021_FD_Crew.Controllers
 
             ViewBag.Action = "Edit";
             ViewBag.CurrentPages = "Technician";
-            return View("ProductEdit", technician);
+            return View("TechnicianEdit", technician);
         }
 
         // POST - edit technician

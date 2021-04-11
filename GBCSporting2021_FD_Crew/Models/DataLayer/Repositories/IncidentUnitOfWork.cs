@@ -1,9 +1,15 @@
-﻿namespace GBCSporting2021_FD_Crew.Models 
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace GBCSporting2021_FD_Crew.Models 
 { 
     public class IncidentUnitOfWork : IIncidentUnitOfWork
     {
         SportsProContext context { get; set; }
-        public IncidentUnitOfWork(SportsProContext ctx) => context = ctx;
+        public IncidentUnitOfWork(SportsProContext contx) => context = contx;
+
 
         private Repository<Customer> customerData;
         public Repository<Customer> Customers
@@ -48,53 +54,5 @@
                 return incidentData;
             }
         }
-
-        public void DeleteIncident(Incident incident)
-        {
-            var currentIncidents = Incidents.List(new QueryOptions<Incident>
-            {
-                Where = i => i.IncidentId == incident.IncidentId
-            });
-            foreach (Incident i in currentIncidents)
-            {
-                Incidents.Delete(i);
-            }
-        }
-
-        public void CreateIncident(Incident incident)
-        {
-            // this is fucked for now - will fix later. gonna die if i don't sleep for a few hrs, i swear. 
-
-  /*          foreach(int id in incidentids) 
-            {
-                Incident i = 
-                    new Incident {IncidentId = id,  }
-            }*/
-        }
-
-
-
-        public void UpdateIncident(Incident incident)
-        {
-            // this is fucked for now - will fix later. gonna die if i don't sleep for a few hrs, i swear. 
-
-            /*          foreach(int id in incidentids) 
-                      {
-                          Incident i = 
-                              new Incident {IncidentId = id,  }
-                      }*/
-        }
-
-        public void Save()
-        {
-            // this is fucked for now - will fix later. gonna die if i don't sleep for a few hrs, i swear. 
-
-            /*          foreach(int id in incidentids) 
-                      {
-                          Incident i = 
-                              new Incident {IncidentId = id,  }
-                      }*/
-        }
-
     }
 }
